@@ -3,7 +3,7 @@ Author: Kevin Dick
 Date: 2020-06-04
 ---
 Description: A Selenium-based scraper to download the
-PDFs listed on the DocumentCloud oof Muckrock-Canada.
+PDFs listed on the DocumentCloud of Muckrock-Canada.
 """
 import os
 from selenium import webdriver
@@ -59,7 +59,9 @@ def main():
 			filename = download.split('/')[-1]
 
 			if args.verbose: print(f'Downloading: {download}')
-			open(os.path.join(args.output_dir, filename), 'w').write(requests.get(download).content)
+			doc = requests.get(download)
+			if args.verbose: print(f'Saving: {download}')
+			open(os.path.join(args.output_dir, filename), 'wb').write(doc.content)
 	driver.quit()
 
 if __name__ == "__main__": main()
